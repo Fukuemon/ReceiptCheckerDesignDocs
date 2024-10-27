@@ -1,0 +1,20 @@
+@startuml ReceiptCheck
+left to right direction
+Actor ユーザー
+
+rectangle ReceiptChecker {
+  package Googleカレンダーの設定 {
+    ユーザー --> (取得する年月を設定)
+    ユーザー --> (取得する開始日と終了日を設定)
+    ユーザー --> (照合する職員を設定)
+  }
+}
+
+rectangle GoogleSpreadSheet {
+  package 職員情報の設定 {
+    ユーザー --> (職員情報を追加)
+    ユーザー --> (職員情報を編集)
+  }
+}
+
+@enduml

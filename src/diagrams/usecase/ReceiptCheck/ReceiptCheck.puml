@@ -1,0 +1,14 @@
+@startuml ReceiptCheck
+left to right direction
+Actor ユーザー
+
+rectangle ReceiptChecker {
+  package 照合作業 {
+    ユーザー --> (訪問データを入力)
+    ユーザー --> (照合する)
+    ユーザー --> (照合結果を確認)
+    ユーザー --> (照合結果をダウンロード)
+  }
+}
+
+@enduml

@@ -1,0 +1,21 @@
+@startuml CheckFlow
+Actor ユーザー
+Participant Frontend as Front
+Participant APIGateway as Gateway
+Participant Lambda
+Participant GAS
+Participant GoogleCalendar
+
+ユーザー --> Front: 取得する年月日・スタッフを設定
+ユーザー --> Front: 実績データ（CSVファイル）を入力し、\n照合ボタンを押下
+Front --> Gateway: Post: /check?\nyear=""&month=""&start_date=""&end_date="",\n-body: {calendarId, staff, receipt_file}
+Gateway --> Lambda: 照合処理の関数を実行
+Lambda --> GAS: GET: https://script.google.com/macros/s/xxxx/exec?\ncalendarId=""&staff=""&year=""&month=""&\nstart_date=""&end_date=""
+GAS --> GoogleCalendar: カレンダーの予定を取得
+GoogleCalendar --> GAS: カレンダーの予定を返却
+GAS --> Lambda: カレンダーの予定を返却
+Lambda --> Lambda: カレンダーの予定と実績データを照合
+Lambda --> Gateway: 照合結果を返却
+Gateway --> Front: 照合結果を返却
+Front --> Front: 照合結果を表示
+@enduml

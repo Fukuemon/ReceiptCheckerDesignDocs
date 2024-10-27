@@ -1,0 +1,17 @@
+@startuml GetStaffs
+Participant Frontend as Front
+Participant APIGateway as Gateway
+Participant Lambda
+Participant GAS
+Participant GoogleSpreadSheet
+
+Front --> Gateway: GET: /staffs
+Gateway --> Lambda: スタッフ一覧を取得
+Lambda --> GAS: GET: https://script.google.com/macros/s/xxxx/exec
+GAS --> GoogleSpreadSheet: スタッフ一覧を取得
+GoogleSpreadSheet --> GAS: スタッフ一覧を返却
+GAS --> Lambda: スタッフ一覧を返却
+Lambda --> Gateway: スタッフ一覧を返却
+Gateway --> Front: スタッフ一覧を返却
+@enduml
+

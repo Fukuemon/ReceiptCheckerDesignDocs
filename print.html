@@ -203,11 +203,11 @@ Cognito オーソライザーを利用し、ユーザーの認証を行う</p>
 <li>スプレッドシートに記載されている職員の名前を返す</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="画面一覧"><a class="header" href="#画面一覧">画面一覧</a></h1>
-<div class="table-wrapper"><table><thead><tr><th>画面名</th><th>Path</th></tr></thead><tbody>
-<tr><td>ログイン</td><td>/login</td></tr>
-<tr><td>照合画面</td><td>/home</td></tr>
-<tr><td>（予定・職員）設定画面</td><td>/settings</td></tr>
-<tr><td>照合結果画面</td><td>/result</td></tr>
+<div class="table-wrapper"><table><thead><tr><th>画面 No</th><th>画面名</th><th>Path</th></tr></thead><tbody>
+<tr><td>1</td><td>ログイン</td><td>/login</td></tr>
+<tr><td>2</td><td>照合画面</td><td>/home</td></tr>
+<tr><td>3</td><td>（予定・職員）設定画面</td><td>/settings</td></tr>
+<tr><td>4</td><td>照合結果画面</td><td>/result</td></tr>
 </tbody></table>
 </div>
 <h2 id="画面遷移図"><a class="header" href="#画面遷移図">画面遷移図</a></h2>
@@ -225,8 +225,8 @@ Cognito オーソライザーを利用し、ユーザーの認証を行う</p>
 </div>
 <h1 id="ユースケース"><a class="header" href="#ユースケース">ユースケース</a></h1>
 <img src="機能構成/../diagrams-svg/usecase/usecase.svg" />
-<div style="break-before: page; page-break-before: always;"></div><p>#　認証
-認証には Cognito を利用する
+<div style="break-before: page; page-break-before: always;"></div><h1 id="認証"><a class="header" href="#認証">認証</a></h1>
+<p>認証には Cognito を利用する
 メールアドレスとパスワードを入力することで、ログインが可能となる
 ユーザーの登録はアプリ上では行わない</p>
 <img src="機能構成/認証認可/../../diagrams-svg/sequence/Auth/Login.svg" />
@@ -236,8 +236,8 @@ Cognito オーソライザーを利用し、ユーザーの認証を行う</p>
 <li>施設毎にデータへのアクセス制御を行えるようにする</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="照合機能"><a class="header" href="#照合機能">照合機能</a></h1>
-<p>ユーザーは照合したい職員, 取得したい年月日を設定し、電子カルテシステムから出力した CSV 形式の実績ファイルを選択する</p>
-<h3 id="システム上での流れ"><a class="header" href="#システム上での流れ">システム上での流れ</a></h3>
+<p>ユーザーは（職員・取得したい年,月,開始日,終了日）を設定し、<br>
+電子カルテシステムから出力した CSV 形式の実績ファイルを選択する</p>
 <img src="機能構成/照合機能/../../diagrams-svg/sequence/CheckFlow/CheckFlow.svg" />
 <div style="break-before: page; page-break-before: always;"></div><h1 id="職員情報の取得"><a class="header" href="#職員情報の取得">職員情報の取得</a></h1>
 <p>職員情報は Google Spreadsheet で管理する。</p>

@@ -6,16 +6,28 @@ Participant Lambda
 Participant GAS
 Participant GoogleCalendar
 
-ユーザー --> Front: 取得する年月日・スタッフを設定
-ユーザー --> Front: 実績データ（CSVファイル）を入力し、\n照合ボタンを押下
-Front --> Gateway: Post: /check?\nyear=""&month=""&start_date=""&end_date="",\n-body: {calendarId, staff, receipt_file}
-Gateway --> Lambda: 照合処理の関数を実行
-Lambda --> GAS: GET: https://script.google.com/macros/s/xxxx/exec?\ncalendarId=""&staff=""&year=""&month=""&\nstart_date=""&end_date=""
-GAS --> GoogleCalendar: カレンダーの予定を取得
+activate ユーザー
+ユーザー -> Front: 取得する年月日・スタッフを設定
+activate Front
+ユーザー -> Front: 実績データ（CSVファイル）を入力し、\n照合ボタンを押下
+Front -> Gateway: Post: /check?\nyear=""&month=""&start_date=""&end_date="",\n-body: {calendarId, staff, receipt_file}
+activate Gateway
+Gateway -> Lambda: 照合処理の関数を実行
+activate Lambda
+Lambda -> GAS: GET: https://script.google.com/macros/s/xxxx/exec?\ncalendarId=""&staff=""&year=""&month=""&\nstart_date=""&end_date=""
+activate GAS
+GAS -> GoogleCalendar: カレンダーの予定を取得
+activate GoogleCalendar
 GoogleCalendar --> GAS: カレンダーの予定を返却
+deactivate GoogleCalendar
 GAS --> Lambda: カレンダーの予定を返却
+deactivate GAS
 Lambda --> Lambda: カレンダーの予定と実績データを照合
 Lambda --> Gateway: 照合結果を返却
+deactivate Lambda
 Gateway --> Front: 照合結果を返却
-Front --> Front: 照合結果を表示
+deactivate Gateway
+Front --> ユーザー: 照合結果を表示
+deactivate Front
+deactivate ユーザー
 @enduml

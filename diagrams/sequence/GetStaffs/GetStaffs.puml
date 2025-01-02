@@ -1,17 +1,31 @@
 @startuml GetStaffs
+Actor ユーザー
 Participant Frontend as Front
 Participant APIGateway as Gateway
 Participant Lambda
 Participant GAS
 Participant GoogleSpreadSheet
 
+activate ユーザー
+ユーザー -> Front: アクション
+activate Front
 Front --> Gateway: GET: /staffs
+activate Gateway
 Gateway --> Lambda: スタッフ一覧を取得
+activate Lambda
 Lambda --> GAS: GET: https://script.google.com/macros/s/xxxx/exec
+activate GAS
 GAS --> GoogleSpreadSheet: スタッフ一覧を取得
+activate GoogleSpreadSheet
 GoogleSpreadSheet --> GAS: スタッフ一覧を返却
+deactivate GoogleSpreadSheet
 GAS --> Lambda: スタッフ一覧を返却
+deactivate GAS
 Lambda --> Gateway: スタッフ一覧を返却
+deactivate Lambda
 Gateway --> Front: スタッフ一覧を返却
+deactivate Gateway
+Front --> ユーザー: スタッフ一覧を表示
+deactivate Front
 @enduml
 

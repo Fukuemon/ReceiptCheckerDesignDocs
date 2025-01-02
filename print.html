@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="light" dir="ltr">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -8,7 +8,7 @@
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
@@ -31,15 +31,17 @@
 
         <!-- Custom theme stylesheets -->
 
-    </head>
-    <body class="sidebar-visible no-js">
-    <div id="body-container">
+
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
-
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
@@ -61,19 +63,16 @@
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            var body = document.querySelector('body');
-            body.classList.remove('no-js')
-            body.classList.add('js');
+            html.classList.add("js");
         </script>
 
         <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var body = document.querySelector('body');
             var sidebar = null;
             var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
@@ -83,45 +82,25 @@
                 sidebar = 'hidden';
             }
             sidebar_toggle.checked = sidebar === 'visible';
-            body.classList.remove('sidebar-visible');
-            body.classList.add("sidebar-" + sidebar);
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="インフラ構成/インフラ構成.html"><strong aria-hidden="true">1.</strong> インフラ構成</a></li><li class="chapter-item expanded "><a href="画面構成図/画面一覧.html"><strong aria-hidden="true">2.</strong> 画面構成</a></li><li class="chapter-item expanded "><a href="機能構成/機能一覧.html"><strong aria-hidden="true">3.</strong> 機能構成</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="機能構成/認証認可/認証.html"><strong aria-hidden="true">3.1.</strong> 認証認可</a></li><li class="chapter-item expanded "><a href="機能構成/照合機能/照合機能.html"><strong aria-hidden="true">3.2.</strong> 照合機能</a></li><li class="chapter-item expanded "><a href="機能構成/予定・職員情報の設定/職員情報の取得.html"><strong aria-hidden="true">3.3.</strong> 職員情報の取得</a></li><li class="chapter-item expanded "><a href="機能構成/備忘録/備忘録.html"><strong aria-hidden="true">3.4.</strong> 備忘録</a></li></ol></li></ol>
-            </div>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <!-- Track and set sidebar scroll position -->
-        <script>
-            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
-            sidebarScrollbox.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') {
-                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
-                }
-            }, { passive: true });
-            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
-            sessionStorage.removeItem('sidebar-scroll');
-            if (sidebarScrollTop) {
-                // preserve sidebar scroll position when navigating via links within sidebar
-                sidebarScrollbox.scrollTop = sidebarScrollTop;
-            } else {
-                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
-                var activeSection = document.querySelector('#sidebar .active');
-                if (activeSection) {
-                    activeSection.scrollIntoView({ block: 'center' });
-                }
-            }
-        </script>
-
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -225,6 +204,8 @@ Cognito オーソライザーを利用し、ユーザーの認証を行う</p>
 </div>
 <h1 id="ユースケース"><a class="header" href="#ユースケース">ユースケース</a></h1>
 <img src="機能構成/../diagrams-svg/usecase/usecase.svg" />
+<h1 id="クラス"><a class="header" href="#クラス">クラス</a></h1>
+<img src="機能構成/../diagrams-svg/class/class.svg" />
 <div style="break-before: page; page-break-before: always;"></div><h1 id="認証"><a class="header" href="#認証">認証</a></h1>
 <p>認証には Cognito を利用する
 メールアドレスとパスワードを入力することで、ログインが可能となる
@@ -239,6 +220,29 @@ Cognito オーソライザーを利用し、ユーザーの認証を行う</p>
 <p>ユーザーは（職員・取得したい年,月,開始日,終了日）を設定し、<br>
 電子カルテシステムから出力した CSV 形式の実績ファイルを選択する</p>
 <img src="機能構成/照合機能/../../diagrams-svg/sequence/CheckFlow/CheckFlow.svg" />
+<h2 id="表示するデータの構造"><a class="header" href="#表示するデータの構造">表示するデータの構造</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>列名</th><th>補足</th></tr></thead><tbody>
+<tr><td>訪問日</td><td>実績と予定で一致させる</td></tr>
+<tr><td>利用者名</td><td>実績と予定で一致させる</td></tr>
+<tr><td>主訪問者</td><td>実績と予定で一致させる</td></tr>
+<tr><td>サービス内容_予定</td><td></td></tr>
+<tr><td>開始時間_予定</td><td></td></tr>
+<tr><td>終了時間_予定</td><td></td></tr>
+<tr><td>提供時間_予定</td><td></td></tr>
+<tr><td>サービス内容_実績</td><td></td></tr>
+<tr><td>開始時間_実績</td><td></td></tr>
+<tr><td>終了時間_実績</td><td></td></tr>
+<tr><td>提供時間_実績</td><td></td></tr>
+<tr><td>加算</td><td>実績の CSV に含まれるもの</td></tr>
+</tbody></table>
+</div>
+<p>下記の 4 項目に分類してデータを返す</p>
+<ul>
+<li>不整合</li>
+<li>整合</li>
+<li>予定のみ</li>
+<li>実績のみ</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="職員情報の取得"><a class="header" href="#職員情報の取得">職員情報の取得</a></h1>
 <p>職員情報は Google Spreadsheet で管理する。</p>
 <img src="機能構成/予定・職員情報の設定/../../diagrams-svg/sequence/GetStaffs/GetStaffs.svg">
